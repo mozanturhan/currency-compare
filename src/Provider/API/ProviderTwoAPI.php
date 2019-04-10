@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Provider\API;
-
 
 use App\Provider\Adapter\ProviderTwoAdapter;
 use App\Provider\Model\ProviderTwoResult;

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome Exchange Rate{% endblock %}
+
+{% block body %}
+    {% for provider in providers %}
+    <div class="card">
+        <div class="card-header">
+            {{ provider.name }}
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Code</th>
+                    <th scope="col">Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for exchangeRate in provider.exchangeRates %}
+                    <tr>
+                        <td> {{ exchangeRate.currency.code }}</td>
+                        <td> {{ exchangeRate.amount | number_format(4, '.', ',') }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Provider
  *
  * @ORM\Table(name="provider")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ProviderRepository")
  */
 class Provider
 {
@@ -28,6 +28,13 @@ class Provider
      */
     private $name;
 
+    /**
+     * @var ExchangeRate[] $exchangeRates
+     * @ORM\OneToMany(targetEntity="App\Entity\ExchangeRate", mappedBy="provider")
+     * @ORM\JoinColumn(referencedColumnName="provider_id", nullable=true)
+     */
+    private $exchangeRates;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,5 +52,11 @@ class Provider
         return $this;
     }
 
-
+    /**
+     * @return ExchangeRate[]
+     */
+    public function getExchangeRates()
+    {
+        return $this->exchangeRates;
+    }
 }

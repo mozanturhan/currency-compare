@@ -24,17 +24,12 @@ class InstallCommand extends Command
         $this->service = $service;
     }
 
-    protected function configure()
-    {
-
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->service->pullData();
-
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        $io->note("Connecting " . count($this->service->getProviders()) . " API...");
+        $this->service->pullData($io);
+        $io->success('The operation completed successfully.');
     }
 }

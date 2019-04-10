@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compare Exchange Rates By Cheapest{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            Cheapest Exchange Rates
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Provider</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Amount</th>
+                    </tr>
+                </thead>
+                {% for exchangeRate in exchangeRates %}
+                    <tr>
+                        <td>{{ exchangeRate.provider.name }}</td>
+                        <td>{{ exchangeRate.currency.code }}</td>
+                        <td>{{ exchangeRate.amount | number_format(4, '.', ',')}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

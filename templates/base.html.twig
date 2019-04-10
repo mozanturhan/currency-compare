@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}" >
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+
+            <nav class="navbar navbar-light bg-light">
+                <div class="container">
+                    <span class="navbar-brand mb-0 h1">
+                        <img src="{{ asset('build/images/logo.a63e10f8.svg') }}">
+                    </span>
+                    {% if app.request.attributes.get('_route') == 'main' %}
+                        <a class="btn btn-primary" href="{{ path('compare') }}" role="button">COMPARE BY CHEAPEST</a>
+                    {% else %}
+                        <a class="btn btn-primary" href="{{ path('main') }}" role="button">BACK</a>
+                    {% endif %}
+                </div>
+            </nav>
+
+            <div class="container">
+                {% block body %}{% endblock %}
+            </div>
+
+
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

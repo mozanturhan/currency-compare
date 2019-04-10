@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Provider\API;
-
 
 use App\Provider\Adapter\ProviderAdapter;
 use App\Service\ClientService;

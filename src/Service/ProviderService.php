@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializerInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ProviderService
 {
@@ -57,25 +58,29 @@ class ProviderService
         $this->providers[] = $provider;
     }
 
-    public function pullData() {
+    /**
+     * @return ProviderAPI[]
+     */
+    public function getProviders(): array
+    {
+        return $this->providers;
+    }
 
+    public function pullData(SymfonyStyle $io) {
 
         $currencyList = $this->generateCurrencies();
         foreach ($this->providers as $provider) {
 
             $providerAdapter = $provider->parseJSON($this->serializer, $this->client->call($provider->getUrl()));
-
-
-
             $providerEntity = $this->generateProvider($provider->getName());
+
+            $io->note("Connecting " . $provider->getName() . " API: " . $provider->getUrl());
 
             foreach ($providerAdapter as $adapter) {
                 $criteria = Criteria::create()->where(Criteria::expr()->eq("code", $adapter->getCode()));
                 $filteredCurrency = $currencyList->matching($criteria);
-
                 $this->generateExchangeRate($adapter->getExchangeRate(), $providerEntity, $filteredCurrency->first());
-
-                dump($provider->getName() . " : " . $adapter->getCode() . " : " . $adapter->getExchangeRate());
+                $io->note($provider->getName() . " API, " . $adapter->getCode() . ": " .  $adapter->getExchangeRate() . " successfully received.");
             }
         }
     }

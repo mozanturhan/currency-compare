@@ -1,0 +1,28 @@
+$primary: #6c9438;
+
+
+@import "~bootstrap/scss/bootstrap";
+
+
+.card{
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.table {
+  margin-bottom: 0 !important;
+}
+
+.card-body {
+  padding: 0 !important;
+}
+
+.card-header {
+  color: #6c9438;
+  font-style: oblique;
+}
+
+.table thead th {
+  background-color: #80b902;
+  color: white;
+}

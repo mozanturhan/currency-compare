@@ -13,5 +13,6 @@ framework:
 
     #esi: true
     #fragments: true
+    serializer: true
     php_errors:
         log: true
