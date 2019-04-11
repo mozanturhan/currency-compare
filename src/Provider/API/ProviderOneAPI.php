@@ -17,7 +17,7 @@ class ProviderOneAPI implements ProviderAPI
 
     public function getName()
     {
-        return "Currency Provider Two";
+        return "Currency Provider One";
     }
 
     /**

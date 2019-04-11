@@ -15,7 +15,7 @@ class ProviderTwoAPI implements ProviderAPI
 
     public function getName()
     {
-        return "Currency Provider One";
+        return "Currency Provider Two";
     }
 
     public function parseJSON(SerializerInterface $serializer, $json)

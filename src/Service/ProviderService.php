@@ -66,8 +66,24 @@ class ProviderService
         return $this->providers;
     }
 
-    public function pullData(SymfonyStyle $io) {
+    public function providerFix() {
+        $providers = new ArrayCollection($this->em->getRepository("App:Provider")->findAll());
 
+        foreach ($providers as $provider) {
+            $isAvailable = false;
+           foreach($this->providers as $activeProvider) {
+               if ($activeProvider->getName() == $provider->getName()) $isAvailable = true;
+           }
+
+           if (!$isAvailable) {
+               $this->em->remove($provider);
+               $this->em->flush();
+           }
+        }
+    }
+
+    public function pullData(SymfonyStyle $io) {
+        $this->providerFix();
         $currencyList = $this->generateCurrencies();
         foreach ($this->providers as $provider) {
 
