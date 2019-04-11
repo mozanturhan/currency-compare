@@ -33,7 +33,7 @@ class ExchangeRate
      *
      * @ORM\ManyToOne(targetEntity="Currency")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="currency_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $currency;
@@ -43,7 +43,7 @@ class ExchangeRate
      *
      * @ORM\ManyToOne(targetEntity="Provider")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="provider_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="provider_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $provider;

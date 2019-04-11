@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +37,11 @@ class Provider
      */
     private $exchangeRates;
 
+    public function __construct()
+    {
+        $this->exchangeRates = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,10 +60,34 @@ class Provider
     }
 
     /**
-     * @return ExchangeRate[]
+     * @return Collection|ExchangeRate[]
      */
-    public function getExchangeRates()
+    public function getExchangeRates(): Collection
     {
         return $this->exchangeRates;
     }
+
+    public function addExchangeRate(ExchangeRate $exchangeRate): self
+    {
+        if (!$this->exchangeRates->contains($exchangeRate)) {
+            $this->exchangeRates[] = $exchangeRate;
+            $exchangeRate->setProvider($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExchangeRate(ExchangeRate $exchangeRate): self
+    {
+        if ($this->exchangeRates->contains($exchangeRate)) {
+            $this->exchangeRates->removeElement($exchangeRate);
+            // set the owning side to null (unless already changed)
+            if ($exchangeRate->getProvider() === $this) {
+                $exchangeRate->setProvider(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

@@ -79,13 +79,18 @@ class ProviderService
             foreach ($providerAdapter as $adapter) {
                 $criteria = Criteria::create()->where(Criteria::expr()->eq("code", $adapter->getCode()));
                 $filteredCurrency = $currencyList->matching($criteria);
-                $this->generateExchangeRate($adapter->getExchangeRate(), $providerEntity, $filteredCurrency->first());
-                $io->note($provider->getName() . " API, " . $adapter->getCode() . ": " .  $adapter->getExchangeRate() . " successfully received.");
+
+                $isInserted = $this->generateExchangeRate($adapter->getExchangeRate(), $providerEntity, $filteredCurrency->first());
+
+                if ($isInserted) {
+                    $io->note($provider->getName() . " API, " . $adapter->getCode() . ": " .  $adapter->getExchangeRate() . " successfully received.");
+                }
             }
         }
     }
 
     private function generateExchangeRate($amount, $provider, $currency) {
+        if (!$currency) return false;
         $exchangeRate = $this->em->getRepository("App:ExchangeRate")->findOneBy([
             "provider"=> $provider,
             "currency"=>$currency,
@@ -103,6 +108,8 @@ class ProviderService
 
         $this->em->persist($exchangeRate);
         $this->em->flush();
+
+        return true;
     }
 
     /**
